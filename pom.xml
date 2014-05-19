@@ -23,6 +23,7 @@
     <spring.version>4.0.2.RELEASE</spring.version>
     <slf4j.version>1.7.6</slf4j.version>
     <logback.version>1.1.1</logback.version>
+    <thoughtmerge.test.version>0.1-SNAPSHOT</thoughtmerge.test.version>
 
     <!-- Plugin Versions -->
     <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
@@ -89,6 +90,12 @@
       </dependency>
 
       <!-- Testing -->
+      <dependency>
+        <groupId>net.thoughtmerge.test</groupId>
+        <artifactId>junit</artifactId>
+        <version>${thoughtmerge.test.version}</version>
+        <scope>test</scope>
+      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>

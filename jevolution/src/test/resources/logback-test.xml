@@ -1,0 +1,22 @@
+<configuration debug="true">
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%boldYellow(%date{yyyy-MM-dd HH:mm:ss.SSS}) | %boldGreen(%-15thread) | %highlight(%-5level) | %boldWhite(%36logger{0}) |- %message%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="net.thoughtmerge" level="debug" additivity="false">
+    <appender-ref ref="console" />
+  </logger>
+
+  <logger name="org.springframework" level="info" additivity="false">
+    <appender-ref ref="console" />
+  </logger>
+
+  <root level="warn">
+    <appender-ref ref="console" />
+  </root>
+</configuration>

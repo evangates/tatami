@@ -146,7 +146,66 @@
             <useTestScope>true</useTestScope>
           </configuration>
         </plugin>-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>com.googlecode.mavennatives</groupId>
+          <artifactId>maven-nativedependencies-plugin</artifactId>
+          <version>0.0.7</version>
+          <executions>
+            <execution>
+              <id>unpacknatives</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>copy</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+          <executions>
+            <execution>
+              <id>bundle-project-sources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+              <configuration>
+                <descriptors>
+                  <descriptor>src/assembly/assembly.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
       </plugins>
     </pluginManagement>
+
+    <resources>
+      <resource>
+        <directory>src/main/scripts</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <targetPath>${project.basedir}/target</targetPath>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 </project>

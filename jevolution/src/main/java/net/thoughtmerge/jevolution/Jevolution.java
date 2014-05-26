@@ -21,7 +21,7 @@ import org.lwjgl.opengl.DisplayMode;
 public class Jevolution {
 
   public final static int DEFAULT_WIDTH = 1024;
-  public final static int DEFAULT_HEIGHT = (int)((double)DEFAULT_WIDTH * 16.0 / 9.0);
+  public final static int DEFAULT_HEIGHT = (int)((double)DEFAULT_WIDTH * 9.0 / 16.0);
   public final static String DEFAULT_TITLE = "Jevolution";
 
   public static void main(String[] args) {

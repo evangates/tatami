@@ -8,12 +8,22 @@
 
 package net.thoughtmerge.jevolution;
 
+import com.artemis.World;
+
 /**
  *
  * @author evan.gates
  */
 public class Jevolution {
-  public static void main(String[] args) {
-    System.out.println("hello world");
+  private World world;
+
+  public Jevolution() {
+    world = new World();
+
+    world.initialize();
+
+    while(true) {
+      world.setDelta(delta);
+    }
   }
 }

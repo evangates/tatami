@@ -8,23 +8,12 @@
 
 package net.thoughtmerge.jevolution;
 
-import org.lwjgl.Sys;
-
 /**
  *
  * @author evan.gates
  */
-public final class Timing {
-  private Timing() {
-    // prevent instantiation
-  }
-
-  /**
-   * Get time in milliseconds
-   *
-   * @return system time in milliseconds
-   */
-  public static long getTimeInMillis() {
-    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+public class App {
+  public static void main(String[] args) {
+    System.out.println("hello world");
   }
 }

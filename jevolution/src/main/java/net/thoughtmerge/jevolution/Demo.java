@@ -33,9 +33,7 @@ public class Demo {
   public final static Color QUAD_COLOR = Color.WHITE;
   public final static int TARGET_FPS = 60;
 
-  private long lastTime;
-  private int fps;
-  private long lastFPS;
+  private final Timer timer;
 
   private float quadX = DEFAULT_WIDTH / 2.0f;
   private float quadWidth = DEFAULT_WIDTH / 10.0F;
@@ -64,7 +62,7 @@ public class Demo {
   }
 
   private Demo() {
-    // no constructor
+    timer = new Timer();
   }
 
   private void create() throws LWJGLException {
@@ -81,8 +79,7 @@ public class Demo {
     initGL();
     resizeGL();
 
-    getDelta();
-    lastFPS = Timing.getTimeInMillis();
+    timer.updateFPS();
   }
 
   private void run() {
@@ -90,7 +87,7 @@ public class Demo {
 
       handleInput();
 
-      updateState(getDelta());
+      updateState(timer.getDelta());
       renderGL();
 
       Display.update();
@@ -189,7 +186,7 @@ public class Demo {
       quadHeight = 0.15f / ASPECT_RATIO;
     }
 
-    updateFPS();
+    timer.updateFPS();
   }
 
   private void renderGL() {
@@ -212,23 +209,6 @@ public class Demo {
         GL11.glVertex2f(quadX - quadWidth/2.0f, quadY + quadHeight/2.0f);
       GL11.glEnd();
     GL11.glPopMatrix();
-  }
-
-  private int getDelta() {
-    long time = Timing.getTimeInMillis();
-    int delta = (int)(time - lastTime);
-    lastTime = time;
-
-    return delta;
-  }
-
-  private void updateFPS() {
-    if (Timing.getTimeInMillis() - lastFPS > 1000) {
-      Display.setTitle(String.format("%s (FPS: %d)", DEFAULT_TITLE, fps));
-      fps = 0;
-      lastFPS += 1000; // add one second
-    }
-    fps++;
   }
 
   private void resizeGL() {}

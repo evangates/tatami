@@ -171,6 +171,24 @@ public class Jevolution {
     if (quadY < 0) quadY = 0;
     if (quadY > DEFAULT_HEIGHT) quadY = DEFAULT_HEIGHT;
 
+    // make quad bigger
+    if (Mouse.isButtonDown(0)) {
+      quadWidth += 0.15f * delta;
+      quadHeight += 0.15f * delta;
+    }
+
+    // make quad smaller
+    if (Mouse.isButtonDown(1)) {
+      quadWidth -= 0.15f * delta;
+      quadHeight -= 0.15f * delta;
+    }
+
+    // clamp size
+    if (quadWidth < 0.15f || quadHeight < 0.15f) {
+      quadWidth = 0.15f;
+      quadHeight = 0.15f / ASPECT_RATIO;
+    }
+
     updateFPS();
   }
 

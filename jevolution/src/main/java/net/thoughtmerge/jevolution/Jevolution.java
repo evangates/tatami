@@ -36,9 +36,8 @@ public class Jevolution {
       game.create();
       game.run();
     }
-    catch(Exception ex) {
-      ex.printStackTrace(System.err);
-//      Sys
+    catch(LWJGLException ex) {
+      logger.error("Exception: {}", ex.getMessage(), ex);
     }
     finally {
       if (game != null) {

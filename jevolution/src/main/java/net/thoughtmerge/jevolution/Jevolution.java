@@ -64,8 +64,48 @@ public class Jevolution {
     initGL();
     resizeGL();
   }
-  private void run() {}
-  private void cleanup() {}
+
+  private void run() {
+    while (!Display.isCloseRequested()) {
+
+      handleInput();
+
+      Display.update();
+    }
+  }
+
+  private void cleanup() {
+    Mouse.destroy();
+    Keyboard.destroy();
+    Display.destroy();
+  }
+
+  private void handleInput() {
+    while(Mouse.next()) {
+      handleMouseEvent();
+    }
+
+    while(Keyboard.next()) {
+      handleKeyboardEvent();
+    }
+  }
+
+  private void handleMouseEvent() {
+    int button = Mouse.getEventButton();
+
+    int x = Mouse.getX();
+    int y = Mouse.getY();
+
+    System.out.println(String.format("Mouse button %d @ (%d, %d)", button, x, y));
+  }
+
+  private void handleKeyboardEvent() {
+    String key = Keyboard.getKeyName(Keyboard.getEventKey());
+    boolean wasPressed = Keyboard.getEventKeyState();
+
+    System.out.println(String.format("%s was %s", key, wasPressed ? "pressed" : "released"));
+  }
+
   private void initGL() {}
   private void resizeGL() {}
 }

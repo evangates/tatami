@@ -30,6 +30,11 @@ public class Jevolution {
   public final static int DEFAULT_HEIGHT = (int)((double)DEFAULT_WIDTH * 9.0 / 16.0);
   public final static String DEFAULT_TITLE = "Jevolution";
   public final static Color QUAD_COLOR = Color.WHITE;
+  public final static int TARGET_FPS = 60;
+
+  private long lastTime;
+  private int fps;
+  private long lastFPS;
 
   public static void main(String[] args) {
     Jevolution game = null;
@@ -58,7 +63,6 @@ public class Jevolution {
   private void create() throws LWJGLException {
     Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     Display.setFullscreen(false);
-    Display.setVSyncEnabled(true);
     Display.setTitle(DEFAULT_TITLE);
     Display.create();
 
@@ -69,6 +73,9 @@ public class Jevolution {
 
     initGL();
     resizeGL();
+
+    getDelta();
+    lastFPS = Timing.getTimeInMillis();
   }
 
   private void run() {
@@ -76,9 +83,10 @@ public class Jevolution {
 
       handleInput();
 
-      render();
+      render(getDelta());
 
       Display.update();
+      Display.sync(TARGET_FPS);
     }
   }
 
@@ -130,7 +138,7 @@ public class Jevolution {
     GL11.glMatrixMode(GL11.GL_MODELVIEW);
   }
 
-  private void render() {
+  private void render(int delta) {
     // clear the screen and depth buffer
     GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
@@ -149,6 +157,25 @@ public class Jevolution {
       GL11.glVertex2f(llx+width, lly+height);
       GL11.glVertex2f(llx, lly+height);
     GL11.glEnd();
+
+    updateFPS();
+  }
+
+  private int getDelta() {
+    long time = Timing.getTimeInMillis();
+    int delta = (int)(time - lastTime);
+    lastTime = time;
+
+    return delta;
+  }
+
+  private void updateFPS() {
+    if (Timing.getTimeInMillis() - lastFPS > 1000) {
+      Display.setTitle(String.format("%s (FPS: %d)", DEFAULT_TITLE, fps));
+      fps = 0;
+      lastFPS += 1000; // add one second
+    }
+    fps++;
   }
 
   private void resizeGL() {}

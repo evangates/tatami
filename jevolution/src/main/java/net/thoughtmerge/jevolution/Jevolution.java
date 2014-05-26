@@ -27,7 +27,8 @@ public class Jevolution {
   private final static Logger logger = LoggerFactory.getLogger(Jevolution.class);
 
   public final static int DEFAULT_WIDTH = 1024;
-  public final static int DEFAULT_HEIGHT = (int)((double)DEFAULT_WIDTH * 9.0 / 16.0);
+  public final static float ASPECT_RATIO = 9.0f / 16.0f;
+  public final static int DEFAULT_HEIGHT = (int)(DEFAULT_WIDTH * ASPECT_RATIO);
   public final static String DEFAULT_TITLE = "Jevolution";
   public final static Color QUAD_COLOR = Color.WHITE;
   public final static int TARGET_FPS = 60;
@@ -35,6 +36,12 @@ public class Jevolution {
   private long lastTime;
   private int fps;
   private long lastFPS;
+
+  private float quadX = DEFAULT_WIDTH / 2.0f;
+  private float quadWidth = DEFAULT_WIDTH / 10.0F;
+  private float quadY = DEFAULT_HEIGHT / 2.0f;
+  private float quadHeight = DEFAULT_HEIGHT / (10.0F * ASPECT_RATIO);
+  private float quadRotation = 0;
 
   public static void main(String[] args) {
     Jevolution game = null;
@@ -83,7 +90,8 @@ public class Jevolution {
 
       handleInput();
 
-      render(getDelta());
+      updateState(getDelta());
+      renderGL();
 
       Display.update();
       Display.sync(TARGET_FPS);
@@ -138,27 +146,54 @@ public class Jevolution {
     GL11.glMatrixMode(GL11.GL_MODELVIEW);
   }
 
-  private void render(int delta) {
+  private void updateState(int delta) {
+    // rotate quad
+    quadRotation += 0.15f * delta;
+
+    if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+      quadX -= 0.35f * delta;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+      quadX += 0.35f * delta;
+    }
+
+    if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+      quadY -= 0.35f * delta;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+      quadY += 0.35f * delta;
+    }
+
+    // keep quad on screen
+    if (quadX < 0) quadX = 0;
+    if (quadX > DEFAULT_WIDTH) quadX = DEFAULT_WIDTH;
+
+    if (quadY < 0) quadY = 0;
+    if (quadY > DEFAULT_HEIGHT) quadY = DEFAULT_HEIGHT;
+
+    updateFPS();
+  }
+
+  private void renderGL() {
     // clear the screen and depth buffer
     GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
     // set the color of the quad (R, G, B, A)
     GL11.glColor3f(QUAD_COLOR.getRed()/255.0f, QUAD_COLOR.getGreen()/255.0f, QUAD_COLOR.getBlue()/255.0f);
 
-    int llx = 0;
-    int lly = 0;
-    int width = DEFAULT_WIDTH/2;
-    int height = DEFAULT_HEIGHT/2;
-
     // draw the quad
-    GL11.glBegin(GL11.GL_QUADS);
-      GL11.glVertex2f(llx, lly);
-      GL11.glVertex2f(llx+width, lly);
-      GL11.glVertex2f(llx+width, lly+height);
-      GL11.glVertex2f(llx, lly+height);
-    GL11.glEnd();
+    GL11.glPushMatrix();
+      GL11.glTranslatef(quadX, quadY, 0);
+      GL11.glRotatef(quadRotation, 0f, 0f, 1f);
+      GL11.glTranslatef(-quadX, -quadY, 0);
 
-    updateFPS();
+      GL11.glBegin(GL11.GL_QUADS);
+        GL11.glVertex2f(quadX - quadWidth/2.0f, quadY - quadHeight/2.0f);
+        GL11.glVertex2f(quadX + quadWidth/2.0f, quadY - quadHeight/2.0f);
+        GL11.glVertex2f(quadX + quadWidth/2.0f, quadY + quadHeight/2.0f);
+        GL11.glVertex2f(quadX - quadWidth/2.0f, quadY + quadHeight/2.0f);
+      GL11.glEnd();
+    GL11.glPopMatrix();
   }
 
   private int getDelta() {

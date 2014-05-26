@@ -52,6 +52,7 @@ public class Jevolution {
   private void create() throws LWJGLException {
     Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     Display.setFullscreen(false);
+    Display.setVSyncEnabled(true);
     Display.setTitle(DEFAULT_TITLE);
     Display.create();
 

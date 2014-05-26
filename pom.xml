@@ -20,6 +20,7 @@
     <!-- Dependency Versions -->
     <no.content.version>99.99-no-content</no.content.version>
     <lwjgl.version>2.9.1</lwjgl.version>
+    <artemis.version>0.5.0</artemis.version>
     <spring.version>4.0.2.RELEASE</spring.version>
     <slf4j.version>1.7.6</slf4j.version>
     <logback.version>1.1.1</logback.version>
@@ -49,6 +50,13 @@
         <groupId>org.lwjgl.lwjgl</groupId>
         <artifactId>lwjgl</artifactId>
         <version>${lwjgl.version}</version>
+      </dependency>
+
+      <!-- Artemis Entity Framework -->
+      <dependency>
+        <groupId>net.onedaybeard.artemis</groupId>
+        <artifactId>artemis-odb</artifactId>
+        <version>${artemis.version}</version>
       </dependency>
 
       <!-- Spring -->
@@ -194,9 +202,22 @@
           <artifactId>maven-antrun-plugin</artifactId>
           <version>1.7</version>
         </plugin>
+        <plugin>
+          <groupId>net.onedaybeard.artemis</groupId>
+          <artifactId>artemis-odb-maven-plugin</artifactId>
+          <version>${artemis.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>artemis</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
 
+    <!-- Default resource configuration -->
     <resources>
       <resource>
         <directory>src/main/scripts</directory>

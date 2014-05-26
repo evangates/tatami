@@ -22,6 +22,11 @@
   <dependencies>
 
     <dependency>
+      <groupId>net.onedaybeard.artemis</groupId>
+      <artifactId>artemis-odb</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.lwjgl.lwjgl</groupId>
       <artifactId>lwjgl</artifactId>
     </dependency>
@@ -112,6 +117,10 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>net.onedaybeard.artemis</groupId>
+        <artifactId>artemis-odb-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

@@ -14,6 +14,7 @@ import java.awt.Color;
 import net.thoughtmerge.jevolution.components.RenderableBox;
 import net.thoughtmerge.jevolution.components.Transform2D;
 import net.thoughtmerge.jevolution.components.Transform2DBounds;
+import net.thoughtmerge.jevolution.components.Transform2DWrapping;
 
 /**
  *
@@ -26,6 +27,16 @@ public class EntityFactory {
 
     boundedBox.addComponent(new Transform2D(x, y));
     boundedBox.addComponent(new Transform2DBounds(minX, maxX, minY, maxY, minRotInDegs, maxRotInDegs));
+    boundedBox.addComponent(new RenderableBox((maxX - minX) / 10f, (maxY - minY) / 10, Color.WHITE));
+
+    return boundedBox;
+  }
+
+  public static Entity createWrappingBox(World world, float x, float y, float minX, float maxX, float minY, float maxY, float minRotInDegs, float maxRotInDegs) {
+    Entity boundedBox = world.createEntity();
+
+    boundedBox.addComponent(new Transform2D(x, y));
+    boundedBox.addComponent(new Transform2DWrapping(minX, maxX, minY, maxY, minRotInDegs, maxRotInDegs));
     boundedBox.addComponent(new RenderableBox((maxX - minX) / 10f, (maxY - minY) / 10, Color.WHITE));
 
     return boundedBox;

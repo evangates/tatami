@@ -12,10 +12,10 @@ import com.artemis.Entity;
 import com.artemis.World;
 import net.thoughtmerge.jevolution.systems.BoundedMovement;
 import net.thoughtmerge.jevolution.systems.BoxRendering;
+import net.thoughtmerge.jevolution.systems.WrappedMovement;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -40,6 +40,7 @@ public class Jevolution {
 
     world.setSystem(new BoundedMovement());
     world.setSystem(new BoxRendering());
+    world.setSystem(new WrappedMovement());
 
     world.initialize();
   }
@@ -72,7 +73,7 @@ public class Jevolution {
     GL11.glOrtho(0, width, 0, height, 1, -1);
     GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
-    Entity thing = EntityFactory.createBoundedBox(world, 0, 0, 0, width, 0, height, 0, 360);
+    Entity thing = EntityFactory.createWrappingBox(world, 0, 0, 0, width, 0, height, 0, 360);
     thing.addToWorld();
   }
 
@@ -93,7 +94,7 @@ public class Jevolution {
     Display.sync(TARGET_FPS);
   }
 
-  public void cleanup() {
+  private void cleanup() {
     Display.destroy();
   }
 }

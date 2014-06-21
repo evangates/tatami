@@ -50,7 +50,15 @@ public class Jevolution {
       create();
 
       while(!Display.isCloseRequested()) {
-        tick();
+        // clear the screen and depth buffer
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
+        world.setDelta(timer.getDelta());
+        world.process();
+        timer.updateFPS();
+
+        Display.update();
+        Display.sync(TARGET_FPS);
       }
     }
     catch(LWJGLException ex) {
@@ -75,23 +83,6 @@ public class Jevolution {
 
     Entity thing = EntityFactory.createWrappingBox(world, 0, 0, 0, width, 0, height, 0, 360);
     thing.addToWorld();
-  }
-
-  /**
-   * call this in the main loop
-   *
-   * updates timer, processes entities
-   */
-  private void tick() {
-    // clear the screen and depth buffer
-    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
-    world.setDelta(timer.getDelta());
-    world.process();
-    timer.updateFPS();
-
-    Display.update();
-    Display.sync(TARGET_FPS);
   }
 
   private void cleanup() {

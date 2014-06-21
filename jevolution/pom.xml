@@ -36,6 +36,11 @@
       <artifactId>joda-time</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>cz.advel.jbullet</groupId>
+      <artifactId>jbullet</artifactId>
+    </dependency>
+
     <!-- Spring -->
 
     <!-- Apache Commons -->

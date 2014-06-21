@@ -21,6 +21,7 @@
     <no.content.version>99.99-no-content</no.content.version>
     <lwjgl.version>2.9.1</lwjgl.version>
     <artemis.version>0.5.0</artemis.version>
+    <jbullet.version>20101010-1</jbullet.version>
     <spring.version>4.0.2.RELEASE</spring.version>
     <slf4j.version>1.7.6</slf4j.version>
     <logback.version>1.1.1</logback.version>
@@ -57,6 +58,13 @@
         <groupId>net.onedaybeard.artemis</groupId>
         <artifactId>artemis-odb</artifactId>
         <version>${artemis.version}</version>
+      </dependency>
+
+      <!-- JBullet Physics Engine -->
+      <dependency>
+        <groupId>cz.advel.jbullet</groupId>
+        <artifactId>jbullet</artifactId>
+        <version>${jbullet.version}</version>
       </dependency>
 
       <!-- Spring -->

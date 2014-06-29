@@ -41,4 +41,13 @@ public class EntityFactory {
 
     return boundedBox;
   }
+
+  public static Entity createBox(World world, float x, float y, float rotation, float width, float height, Color color) {
+    Entity boundedBox = world.createEntity();
+
+    boundedBox.addComponent(new Transform2D(x, y));
+    boundedBox.addComponent(new RenderableBox(width, height, color));
+
+    return boundedBox;
+  }
 }

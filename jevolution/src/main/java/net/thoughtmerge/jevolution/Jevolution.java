@@ -10,8 +10,12 @@ package net.thoughtmerge.jevolution;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import java.awt.Color;
+import java.util.Arrays;
+import java.util.List;
 import net.thoughtmerge.jevolution.systems.BoundedMovement;
 import net.thoughtmerge.jevolution.systems.BoxRendering;
+import net.thoughtmerge.jevolution.systems.CameraInputSystem;
 import net.thoughtmerge.jevolution.systems.WrappedMovement;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -28,37 +32,45 @@ public class Jevolution {
   private final static String DEFAULT_TITLE = "Jevolution";
   private final static int TARGET_FPS = 60;
 
-  private int width;
-  private int height;
+  private final int width;
+  private final int height;
 
   public Jevolution(float minx, float maxx, float miny, float maxy) {
     width = (int)(maxx - minx);
     height = (int)(maxy - miny);
 
+    inputSystem = new CameraInputSystem(width, height);
+
     world = new World();
     timer = new Timer();
 
+    world.setSystem(inputSystem);
     world.setSystem(new BoundedMovement());
     world.setSystem(new BoxRendering());
     world.setSystem(new WrappedMovement());
 
     world.initialize();
   }
+  private final CameraInputSystem inputSystem;
 
   public void start() {
     try {
       create();
 
-      while(!Display.isCloseRequested()) {
+      while(!finished()) {
         // clear the screen and depth buffer
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-        world.setDelta(timer.getDelta());
+        final int delta = timer.getDelta();
+        world.setDelta(delta);
+
         world.process();
         timer.updateFPS();
 
         Display.update();
         Display.sync(TARGET_FPS);
+
+        Display.setTitle(String.format("%s: %d fps", DEFAULT_TITLE, timer.getFps()));
       }
     }
     catch(LWJGLException ex) {
@@ -69,6 +81,10 @@ public class Jevolution {
     }
   }
 
+  private boolean finished() {
+    return Display.isCloseRequested() || inputSystem.isExitRequested();
+  }
+
   private void create() throws LWJGLException {
     Display.setDisplayMode(new DisplayMode(width, height));
     Display.setFullscreen(false);
@@ -76,13 +92,14 @@ public class Jevolution {
     Display.setResizable(false);
     Display.create();
 
-    GL11.glMatrixMode(GL11.GL_PROJECTION);
-    GL11.glLoadIdentity();
-    GL11.glOrtho(0, width, 0, height, 1, -1);
-    GL11.glMatrixMode(GL11.GL_MODELVIEW);
+    List<Entity> entities = Arrays.asList(
+        EntityFactory.createBox(world, 10, 15, 0, 20, 30, Color.GREEN)
+        ,EntityFactory.createBox(world, width / 2.0f, height / 2.0f, 0, 50, 50, Color.ORANGE)
+    );
 
-    Entity thing = EntityFactory.createWrappingBox(world, 0, 0, 0, width, 0, height, 0, 360);
-    thing.addToWorld();
+    for (Entity entity : entities) {
+      entity.addToWorld();
+    }
   }
 
   private void cleanup() {

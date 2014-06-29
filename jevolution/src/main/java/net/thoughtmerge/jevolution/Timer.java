@@ -16,8 +16,9 @@ import org.lwjgl.Sys;
  */
 public final class Timer {
   private long lastTime;
-  private int fps;
+  private int framesThisSecond;
   private long lastFpsTimeInMillis;
+  private int fps;
 
   public Timer() {
     getDelta();
@@ -45,11 +46,16 @@ public final class Timer {
     return fps;
   }
 
+  public int getFramesThisSecond() {
+    return framesThisSecond;
+  }
+
   public void updateFPS() {
     if (getTimeInMillis() - lastFpsTimeInMillis > 1000) {
-      fps = 0;
+      fps = framesThisSecond;
+      framesThisSecond = 0;
       lastFpsTimeInMillis += 1000; // add one second
     }
-    fps++;
+    framesThisSecond++;
   }
 }

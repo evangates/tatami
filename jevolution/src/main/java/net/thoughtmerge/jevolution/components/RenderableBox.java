@@ -25,6 +25,9 @@ public class RenderableBox extends Component {
   public float blue;
   public float green;
 
+  public static float cameraX = 0;
+  public static float cameraY = 0;
+
   public RenderableBox(float width, float height, Color color) {
     this.width = width;
     this.height = height;

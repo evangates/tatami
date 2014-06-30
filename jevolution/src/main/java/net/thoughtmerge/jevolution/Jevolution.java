@@ -35,6 +35,17 @@ public class Jevolution {
   private final int width;
   private final int height;
 
+  private final static Color bgColor = new Color(0x44, 0x44, 0x44);
+  private final static float bgRed;
+  private final static float bgGreen;
+  private final static float bgBlue;
+  static {
+    float[] colorComponents = bgColor.getRGBColorComponents(null);
+    bgRed = colorComponents[0];
+    bgGreen = colorComponents[1];
+    bgBlue = colorComponents[2];
+  }
+
   public Jevolution(float minx, float maxx, float miny, float maxy) {
     width = (int)(maxx - minx);
     height = (int)(maxy - miny);
@@ -59,6 +70,7 @@ public class Jevolution {
 
       while(!finished()) {
         // clear the screen and depth buffer
+        GL11.glClearColor(bgRed, bgGreen, bgBlue, 1);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         final int delta = timer.getDelta();

@@ -10,6 +10,7 @@ package net.thoughtmerge.jevolution.components;
 
 import com.artemis.Component;
 import java.awt.Color;
+import net.thoughtmerge.ColorUtils;
 
 /**
  *
@@ -29,13 +30,9 @@ public class RenderableBox extends Component {
     this.width = width;
     this.height = height;
 
-    this.alpha = toFloat(color.getAlpha());
-    this.red = toFloat(color.getRed());
-    this.blue = toFloat(color.getBlue());
-    this.green = toFloat(color.getGreen());
-  }
-
-  private float toFloat(int colorComponent) {
-    return colorComponent / 255.0f;
+    this.alpha = ColorUtils.toFloat(color.getAlpha());
+    this.red = ColorUtils.toFloat(color.getRed());
+    this.blue = ColorUtils.toFloat(color.getBlue());
+    this.green = ColorUtils.toFloat(color.getGreen());
   }
 }

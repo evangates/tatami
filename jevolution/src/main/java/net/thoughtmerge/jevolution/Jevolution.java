@@ -13,6 +13,7 @@ import com.artemis.World;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
+import net.thoughtmerge.ColorUtils;
 import net.thoughtmerge.jevolution.systems.BoundedMovement;
 import net.thoughtmerge.jevolution.systems.BoxRendering;
 import net.thoughtmerge.jevolution.systems.CameraInputSystem;
@@ -36,15 +37,9 @@ public class Jevolution {
   private final int height;
 
   private final static Color bgColor = new Color(0x44, 0x44, 0x44);
-  private final static float bgRed;
-  private final static float bgGreen;
-  private final static float bgBlue;
-  static {
-    float[] colorComponents = bgColor.getRGBColorComponents(null);
-    bgRed = colorComponents[0];
-    bgGreen = colorComponents[1];
-    bgBlue = colorComponents[2];
-  }
+  private final static float bgRed = ColorUtils.toFloat(bgColor.getRed());
+  private final static float bgGreen = ColorUtils.toFloat(bgColor.getGreen());
+  private final static float bgBlue = ColorUtils.toFloat(bgColor.getBlue());
 
   public Jevolution(float minx, float maxx, float miny, float maxy) {
     width = (int)(maxx - minx);

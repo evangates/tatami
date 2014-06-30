@@ -13,15 +13,16 @@ import com.artemis.World;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-import net.thoughtmerge.ColorUtils;
+import net.thoughtmerge.jevolution.components.Transform2D;
 import net.thoughtmerge.jevolution.systems.BoundedMovement;
 import net.thoughtmerge.jevolution.systems.BoxRendering;
+import net.thoughtmerge.jevolution.systems.CameraImpulseSystem;
 import net.thoughtmerge.jevolution.systems.CameraInputSystem;
 import net.thoughtmerge.jevolution.systems.WrappedMovement;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 
 /**
  *
@@ -36,40 +37,41 @@ public class Jevolution {
   private final int width;
   private final int height;
 
-  private final static Color bgColor = new Color(0x44, 0x44, 0x44);
-  private final static float bgRed = ColorUtils.toFloat(bgColor.getRed());
-  private final static float bgGreen = ColorUtils.toFloat(bgColor.getGreen());
-  private final static float bgBlue = ColorUtils.toFloat(bgColor.getBlue());
+  private final InputState inputState;
+  private final Transform2D camera;
+
+  private boolean exitRequested;
 
   public Jevolution(float minx, float maxx, float miny, float maxy) {
     width = (int)(maxx - minx);
     height = (int)(maxy - miny);
 
-    inputSystem = new CameraInputSystem(width, height);
+    inputState = new InputState();
+    camera = new Transform2D(0, 0);
+
+    exitRequested = false;
 
     world = new World();
     timer = new Timer();
 
-    world.setSystem(inputSystem);
+    world.setSystem(new CameraInputSystem(width, height, inputState, camera));
+    world.setSystem(new CameraImpulseSystem(camera));
     world.setSystem(new BoundedMovement());
     world.setSystem(new BoxRendering());
     world.setSystem(new WrappedMovement());
 
     world.initialize();
   }
-  private final CameraInputSystem inputSystem;
 
   public void start() {
     try {
       create();
 
       while(!finished()) {
-        // clear the screen and depth buffer
-        GL11.glClearColor(bgRed, bgGreen, bgBlue, 1);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
         final int delta = timer.getDelta();
         world.setDelta(delta);
+
+        handleInput();
 
         world.process();
         timer.updateFPS();
@@ -89,7 +91,7 @@ public class Jevolution {
   }
 
   private boolean finished() {
-    return Display.isCloseRequested() || inputSystem.isExitRequested();
+    return exitRequested || Display.isCloseRequested();
   }
 
   private void create() throws LWJGLException {
@@ -106,6 +108,38 @@ public class Jevolution {
 
     for (Entity entity : entities) {
       entity.addToWorld();
+    }
+  }
+
+  private void handleInput() {
+    inputState.clear();
+
+    if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+      inputState.moveCameraUp = true;
+    }
+    if (!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        && (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT))) {
+      inputState.moveCameraLeft = true;
+    }
+    if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+      inputState.moveCameraDown = true;
+    }
+    if (!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        && (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT))) {
+      inputState.moveCameraRight = true;
+    }
+
+    if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        && (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT))) {
+      inputState.rotateCameraCounterClockwise = true;
+    }
+    if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+        && (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT))) {
+      inputState.rotateCameraClockwise = true;
+    }
+
+    if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+      exitRequested = true;
     }
   }
 

@@ -35,23 +35,20 @@ public class BoxRendering extends EntityProcessingSystem {
     Transform2D tx = transformMapper.get(entity);
     RenderableBox renderable = renderableMapper.get(entity);
 
-    float adjustedX = tx.x - RenderableBox.cameraX;
-    float adjustedY = tx.y - RenderableBox.cameraY;
-
-        // set the color of the quad (R, G, B, A)
+    // set the color of the quad (R, G, B, A)
     GL11.glColor4f(renderable.red, renderable.green, renderable.blue, renderable.alpha);
 
     // draw the quad
     GL11.glPushMatrix();
-      GL11.glTranslatef(adjustedX, adjustedY, 0);
+      GL11.glTranslatef(tx.x, tx.y, 0);
       GL11.glRotatef(tx.rotationInDegrees, 0f, 0f, 1f);
-      GL11.glTranslatef(-adjustedX, -adjustedY, 0);
+      GL11.glTranslatef(-tx.x, -tx.y, 0);
 
       GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(adjustedX - renderable.width/2.0f, adjustedY - renderable.height/2.0f);
-        GL11.glVertex2f(adjustedX + renderable.width/2.0f, adjustedY - renderable.height/2.0f);
-        GL11.glVertex2f(adjustedX + renderable.width/2.0f, adjustedY + renderable.height/2.0f);
-        GL11.glVertex2f(adjustedX - renderable.width/2.0f, adjustedY + renderable.height/2.0f);
+        GL11.glVertex2f(tx.x - renderable.width/2.0f, tx.y - renderable.height/2.0f);
+        GL11.glVertex2f(tx.x + renderable.width/2.0f, tx.y - renderable.height/2.0f);
+        GL11.glVertex2f(tx.x + renderable.width/2.0f, tx.y + renderable.height/2.0f);
+        GL11.glVertex2f(tx.x - renderable.width/2.0f, tx.y + renderable.height/2.0f);
       GL11.glEnd();
     GL11.glPopMatrix();
 

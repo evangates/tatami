@@ -10,9 +10,9 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Djava.library.path=natives -classpath %classpath net.thoughtmerge.jevolution.App</exec.args>
+                <exec.args>-Djava.library.path=natives -classpath %classpath net.thoughtmerge.tatami.App</exec.args>
                 <exec.executable>java</exec.executable>
-                <exec.workingdir>/home/evan.gates/workspace/jevolution/jevolution/target</exec.workingdir>
+                <exec.workingdir>/home/evan.gates/workspace/tatami/tatami/target</exec.workingdir>
             </properties>
         </action>
         <action>
@@ -25,10 +25,10 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Djava.library.path=natives -classpath %classpath net.thoughtmerge.jevolution.App</exec.args>
+                <exec.args>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -Djava.library.path=natives -classpath %classpath net.thoughtmerge.tatami.App</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
-                <exec.workingdir>/home/evan.gates/workspace/jevolution/jevolution/target</exec.workingdir>
+                <exec.workingdir>/home/evan.gates/workspace/tatami/tatami/target</exec.workingdir>
             </properties>
         </action>
         <action>
@@ -41,9 +41,9 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Djava.library.path=natives -classpath %classpath net.thoughtmerge.jevolution.App</exec.args>
+                <exec.args>-Djava.library.path=natives -classpath %classpath net.thoughtmerge.tatami.App</exec.args>
                 <exec.executable>java</exec.executable>
-                <exec.workingdir>/home/evan.gates/workspace/jevolution/jevolution/target</exec.workingdir>
+                <exec.workingdir>/home/evan.gates/workspace/tatami/tatami/target</exec.workingdir>
             </properties>
         </action>
     </actions>

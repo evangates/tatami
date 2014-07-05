@@ -6,15 +6,15 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution.systems;
+package net.thoughtmerge.tatami.systems;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import net.thoughtmerge.jevolution.components.RenderableBox;
-import net.thoughtmerge.jevolution.components.Transform2D;
+import net.thoughtmerge.tatami.components.RenderableBox;
+import net.thoughtmerge.tatami.components.Transform2D;
 import org.lwjgl.opengl.GL11;
 
 /**

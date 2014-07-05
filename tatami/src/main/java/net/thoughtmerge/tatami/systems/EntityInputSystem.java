@@ -6,12 +6,12 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution.systems;
+package net.thoughtmerge.tatami.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
-import net.thoughtmerge.jevolution.components.Transform2D;
+import net.thoughtmerge.tatami.components.Transform2D;
 import org.lwjgl.input.Keyboard;
 
 /**

@@ -6,19 +6,20 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution;
+package net.thoughtmerge.tatami;
 
 import com.artemis.Entity;
 import com.artemis.World;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-import net.thoughtmerge.jevolution.components.Transform2D;
-import net.thoughtmerge.jevolution.systems.BoundedMovement;
-import net.thoughtmerge.jevolution.systems.BoxRendering;
-import net.thoughtmerge.jevolution.systems.CameraImpulseSystem;
-import net.thoughtmerge.jevolution.systems.CameraInputSystem;
-import net.thoughtmerge.jevolution.systems.WrappedMovement;
+import net.thoughtmerge.tatami.components.Physical2D;
+import net.thoughtmerge.tatami.components.Transform2D;
+import net.thoughtmerge.tatami.systems.BoundedMovement;
+import net.thoughtmerge.tatami.systems.BoxRendering;
+import net.thoughtmerge.tatami.systems.CameraImpulseSystem;
+import net.thoughtmerge.tatami.systems.CameraInputSystem;
+import net.thoughtmerge.tatami.systems.WrappedMovement;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -38,7 +39,7 @@ public class Jevolution {
   private final int height;
 
   private final InputState inputState;
-  private final Transform2D camera;
+  private final Physical2D camera;
 
   private boolean exitRequested;
 
@@ -47,7 +48,7 @@ public class Jevolution {
     height = (int)(maxy - miny);
 
     inputState = new InputState();
-    camera = new Transform2D(0, 0);
+    camera = new Physical2D(0, 0, 0);
 
     exitRequested = false;
 

@@ -6,7 +6,7 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution.components;
+package net.thoughtmerge.tatami.components;
 
 import com.artemis.Component;
 

@@ -6,7 +6,7 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution;
+package net.thoughtmerge.tatami;
 
 /**
  *

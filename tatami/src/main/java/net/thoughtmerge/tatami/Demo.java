@@ -6,7 +6,7 @@
  * ------------------------------------------------------------------
  */
 
-package net.thoughtmerge.jevolution;
+package net.thoughtmerge.tatami;
 
 import java.awt.Color;
 import org.lwjgl.LWJGLException;

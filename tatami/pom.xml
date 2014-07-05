@@ -2,19 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>jevolution-root</artifactId>
+    <artifactId>tatami-root</artifactId>
     <groupId>net.thoughtmerge</groupId>
     <version>0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>net.thoughtmerge</groupId>
-  <artifactId>jevolution</artifactId>
+  <artifactId>tatami</artifactId>
   <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <finalName>${project.artifactId}-${project.version}.jar</finalName>
-    <main.class>net.thoughtmerge.jevolution.Jevolution</main.class>
+    <main.class>net.thoughtmerge.tatami.Tatami</main.class>
     <natives>${project.basedir}/target/natives/</natives>
     <release.natives>natives/</release.natives>
   </properties>
